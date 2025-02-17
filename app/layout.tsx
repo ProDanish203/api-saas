@@ -3,7 +3,6 @@ import { Poppins, Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
-import Head from "next/head";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
