@@ -3,8 +3,9 @@ import { Separator } from "@/components/ui/separator";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Todo App",
-  description: "Manage your tasks",
+  title: "API SaaS",
+  description:
+    "API SaaS is a platform for managing your APIs. It allows you to create, update, and delete APIs.",
 };
 
 export default function RootLayout({

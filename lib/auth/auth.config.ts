@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../db";
 import bcrypt from "bcryptjs";
+import { createCustomer } from "../stripe/stripe";
 
 export const authOptions: NextAuthConfig = {
   pages: {
@@ -52,6 +53,8 @@ export const authOptions: NextAuthConfig = {
             },
           });
 
+          await createCustomer(user);
+
           return {
             id: user.id,
             email: user.email,
@@ -60,18 +63,14 @@ export const authOptions: NextAuthConfig = {
           };
         }
 
-        if (!user || !user.password) {
-          throw new Error("User not found");
-        }
+        if (!user || !user.password) throw new Error("Invalid credentials");
 
         const isPasswordValid = await bcrypt.compare(
           credentials.password as string,
           user.password
         );
 
-        if (!isPasswordValid) {
-          throw new Error("Invalid password");
-        }
+        if (!isPasswordValid) throw new Error("Invalid credentials");
 
         return {
           id: user.id,

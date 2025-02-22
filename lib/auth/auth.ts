@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { authOptions } from "@/lib/auth/auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/db";
+import { createCustomer } from "../stripe/stripe";
 
 export const { handlers, auth } = NextAuth({
   ...authOptions,
@@ -31,6 +32,7 @@ export const { handlers, auth } = NextAuth({
               password: "",
             },
           });
+          await createCustomer(dbUser);
           token.id = dbUser.id;
         } else {
           token.id = user.id;
