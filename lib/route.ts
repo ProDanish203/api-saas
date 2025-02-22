@@ -1,4 +1,4 @@
-export const API_AUTH_PREFIX = "/api/auth";
+export const API_AUTH_PREFIX = "/api";
 
 export const AUTH_ROUTES = ["/login"];
 

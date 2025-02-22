@@ -57,13 +57,28 @@ model User {
   password                 String?
   stripe_cust_id           String?
   stripe_subscription_item String?
+  api_key                  String?
 
   accounts Account[]
   sessions Session[]
+  ApiUsage ApiUsage[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Log       Log[]
+}
+
+model ApiUsage {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  month     DateTime
+  hit_count Int      @default(0)
+  cost      Int      @default(0)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, month], name: "userId_month")
+  @@index([userId, month])
 }
 
 model Log {
